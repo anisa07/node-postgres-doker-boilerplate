@@ -1,0 +1,28 @@
+version: '3.3'
+
+services:
+
+  app:
+    build:
+      context: ./
+      dockerfile: dockerfile.dev
+    volumes:
+    - .:/app/
+    - /app/node_modules
+    ports:
+    - "3001:3001" # Application port
+    - "9229:9229" # Node.js debugger
+    env_file:
+    - ./config/variables.env
+    depends_on:
+    - postgre
+
+  postgre:
+    container_name: postgre
+    image: postgres:latest
+    volumes:
+    - ./postgres-data:/var/lib/postgres/data
+    ports:
+    - "5432:5432" # Default Postgres port
+    env_file:
+    - ./config/variables.env

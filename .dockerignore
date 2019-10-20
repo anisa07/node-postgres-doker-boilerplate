@@ -1,0 +1,13 @@
+# .git folder
+.git*
+
+# .idea folder
+.idea*
+
+# build and logs
+build/
+logs/
+
+# node_modules and postgres-data
+node_modules/
+postgres-data/
