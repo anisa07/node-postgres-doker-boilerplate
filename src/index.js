@@ -1,6 +1,14 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const { pool } = require('./db/pool');
+const expressGraphQl = require("express-graphql");
+const { GraphQLSchema } = require("graphql");
+const { pool, createTable } = require('./db/pool');
+const { query } = require("./graphql/query");
+const { mutation } = require("./graphql/mutation");
+
+const schema = new GraphQLSchema({
+	mutation
+});
 
 const app = express();
 const port = process.env.APP_PORT;
@@ -12,14 +20,26 @@ app.use(
 	})
 );
 
-pool.query('SELECT NOW()', (err, res) => {
-	console.log('Err', err);
-	console.log('Res', res);
-	pool.end()
-});
+/* Example Create table */
+const queryText =
+	`CREATE TABLE IF NOT EXISTS
+      events(
+        id UUID PRIMARY KEY,
+        name VARCHAR(128) NOT NULL,
+        description VARCHAR(128),
+        guests VARCHAR(128),
+        start_date TIMESTAMP,
+        end_date TIMESTAMP
+      )`;
 
+createTable(queryText);
 
-app.get('/', (request, response) => {
+app.get('/',
+	expressGraphQl({
+	schema: schema,
+	graphql: true
+	}),
+	(request, response) => {
 	response.json({ info: 'Node.js, Express, and Postgres API' })
 });
 

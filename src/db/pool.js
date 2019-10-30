@@ -8,7 +8,20 @@ const pool = new Pool({
 	port:  process.env.POSTGRES_PORT,
 });
 
+/* Example Create a table */
+const createTable = (queryText) => {
+	pool.query(queryText)
+		.then((res) => {
+			console.log('res', res);
+			pool.end();
+		})
+		.catch((err) => {
+			console.log('err', err);
+			pool.end();
+		});
+};
 
 module.exports = {
-	pool
+	pool,
+	createTable
 };
