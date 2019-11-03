@@ -13,11 +13,11 @@ const createTable = (queryText) => {
 	pool.query(queryText)
 		.then((res) => {
 			console.log('res', res);
-			pool.end();
+		//	pool.end();
 		})
 		.catch((err) => {
 			console.log('err', err);
-			pool.end();
+		//	pool.end();
 		});
 };
 

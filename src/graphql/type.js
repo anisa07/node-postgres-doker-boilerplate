@@ -6,6 +6,7 @@ const EventType = new GraphQLObjectType({
 	name: "Event",
 	type: "Query",
 	fields: {
+		id: { type: GraphQLString },
 		name: { type: new GraphQLNonNull(GraphQLString) },
 		description: { type: GraphQLString },
 		guests: { type: new GraphQLList(GraphQLString) },
@@ -13,3 +14,7 @@ const EventType = new GraphQLObjectType({
 		end_date: { type: GraphQLString }
 	}
 });
+
+module.exports = {
+	EventType
+};

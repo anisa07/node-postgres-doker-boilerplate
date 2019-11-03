@@ -7,8 +7,23 @@ const { query } = require("./graphql/query");
 const { mutation } = require("./graphql/mutation");
 
 const schema = new GraphQLSchema({
+	query,
 	mutation
 });
+
+/* Example Create table */
+const queryText =
+	`CREATE TABLE IF NOT EXISTS
+      events(
+        id UUID PRIMARY KEY,
+        name VARCHAR(128) NOT NULL,
+        description VARCHAR(255),
+        guests VARCHAR(128) [],
+        start_date TIMESTAMP,
+        end_date TIMESTAMP
+      )`;
+
+createTable(queryText);
 
 const app = express();
 const port = process.env.APP_PORT;
@@ -20,28 +35,12 @@ app.use(
 	})
 );
 
-/* Example Create table */
-const queryText =
-	`CREATE TABLE IF NOT EXISTS
-      events(
-        id UUID PRIMARY KEY,
-        name VARCHAR(128) NOT NULL,
-        description VARCHAR(128),
-        guests VARCHAR(128),
-        start_date TIMESTAMP,
-        end_date TIMESTAMP
-      )`;
-
-createTable(queryText);
-
-app.get('/',
+app.use('/',
 	expressGraphQl({
 	schema: schema,
-	graphql: true
-	}),
-	(request, response) => {
-	response.json({ info: 'Node.js, Express, and Postgres API' })
-});
+	graphiql: true
+	})
+);
 
 app.listen(port, () => {
 	console.log(`App running on port ${port}.`)
