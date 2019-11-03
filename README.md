@@ -1,2 +1,2 @@
 # node-postgres-doker-boilerplate
-Node.Js Postgres Docker boilerplate
+GraphQL Node.Js Postgres Docker boilerplate
