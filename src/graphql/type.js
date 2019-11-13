@@ -5,13 +5,15 @@ const { GraphQLString, GraphQLList, GraphQLNonNull, GraphQLObjectType } = graphq
 const EventType = new GraphQLObjectType({
 	name: "Event",
 	type: "Query",
-	fields: {
-		id: { type: GraphQLString },
-		name: { type: new GraphQLNonNull(GraphQLString) },
-		description: { type: GraphQLString },
-		guests: { type: new GraphQLList(GraphQLString) },
-		start_date: { type: GraphQLString },
-		end_date: { type: GraphQLString }
+	fields:() => {
+		return {
+			id: { type: GraphQLString },
+			name: { type: GraphQLString },
+			description: { type: GraphQLString },
+			guests: { type: new GraphQLList(GraphQLString) },
+			start_date: { type: GraphQLString },
+			end_date: { type: GraphQLString }
+		}
 	}
 });
 

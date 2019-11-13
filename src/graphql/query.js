@@ -10,13 +10,13 @@ const RootQuery = new GraphQLObjectType({
 	fields: {
 		getEvents: {
 			type: EventType,
-			resolve(parentValue, args) {
+			resolve() {
 				const query = `SELECT * FROM events`;
 
 				return pool.query(query)
 					.then((res) => {
-						console.log('res get all lines', res);
-						return res;
+						console.log('res get all lines', res.rows);
+						return res.rows[0];
 					//	pool.end();
 					})
 					.catch((err) => {
