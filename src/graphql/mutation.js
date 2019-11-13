@@ -32,8 +32,8 @@ const RootMutation = new GraphQLObjectType({
 
 				return pool.query(query, values)
 					.then((res) => {
-						console.log('res insert line', res);
-						return res;
+						console.log('res insert line', res.rows);
+						return res.rows[0];
 						// pool.end();
 					})
 					.catch((err) => {
